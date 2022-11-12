@@ -12,3 +12,13 @@ python manage.py runserver
 
 server will run on 
 http://127.0.0.1:8000
+
+To login as admin, Go to login page and type following creds
+username - cheran
+password - 1234
+
+already existing customer user
+username - richards
+password - Username@123
+
+to signup as new customer go to signup page and fill the details.
