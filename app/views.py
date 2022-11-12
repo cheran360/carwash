@@ -1,6 +1,3 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
@@ -11,10 +8,15 @@ from django.contrib.auth.models import User
 from .decorators import unauthenticated_user
 
 # Create your views here.
+def error_404_view(request, exception):
+    data = {}
+    return render(request, 'error_404.html', data)
+    
 @unauthenticated_user
 def welcomePage(request):
     context = {}
     return render(request,'welcome.html',context)
+
 @unauthenticated_user
 def register(request):
     try:
@@ -99,31 +101,47 @@ def showBookings(request):
 
 @login_required(login_url='login')
 def adminAddPlaces(request):
-    if request.method == 'POST':
-        ## need editing
-        location = request.POST.get('place')
-        service = request.POST.get('service')
+    if request.user.is_staff:
+        if request.method == 'POST':
+            location = request.POST.get('place')
+            service = request.POST.get('service')
 
-        s = Servicetype.objects.create(type_of_service=service)
-        s.save()
-        new_service = Service.objects.create(location=location, service_type=s)
-        new_service.save()
-        return redirect('home')
-    context = {}
-    return render(request, 'adminaddplace.html', context)
+            s = Servicetype.objects.create(type_of_service=service)
+            s.save()
+            new_service = Service.objects.create(location=location, service_type=s)
+            new_service.save()
+            return redirect('home')
+        context = {}
+        return render(request, 'adminaddplace.html', context)
+    else:
+        messages.info(request, 'You are not admin')
+        context = {}
+        return render(request, 'homepage.html', context)
 
 @login_required(login_url='login')
 def adminShowAllBookings(request):
-    bookings = Booking.objects.all()
-    context = {'bookings': bookings}
-    return render(request, 'adminviewbookings.html', context)
+    if request.user.is_staff:
+        bookings = Booking.objects.all()
+        context = {'bookings': bookings}
+        return render(request, 'adminviewbookings.html', context)
+    else:
+        messages.info(request, 'You are not admin')
+        context = {}
+        return render(request, 'homepage.html', context)
+
 
 @login_required(login_url='login')
 def adminModifyStatus(request,pk,status):
-    booking = Booking.objects.get(id=pk)
-    if status == '1':
-        booking.status = 'Accepted'
+    if request.user.is_staff:
+        booking = Booking.objects.get(id=pk)
+        if status == '1':
+            booking.status = 'Accepted'
+        else:
+            booking.status = 'Rejected'
+        booking.save()
+        return redirect('home')
     else:
-        booking.status = 'Rejected'
-    booking.save()
-    return redirect('home')
+        messages.info(request, 'You are not admin')
+        context = {}
+        return render(request, 'homepage.html', context)
+
