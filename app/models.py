@@ -3,7 +3,7 @@ import datetime
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils.timezone import now
 class Customer(models.Model):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     username = models.CharField(max_length=200)
@@ -35,12 +35,12 @@ class Booking(models.Model):
     customer_details = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     service_details = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS)
-    date_created = models.DateField(default=datetime.date.today())
+    date_created = models.DateField(default=now)
 
     def __str__(self):
         return str(self.id)
 
 class Tracker(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    date_created = models.DateField(default=datetime.date.today())
+    date_created = models.DateField(default=now)
     count = models.IntegerField(default=0)
