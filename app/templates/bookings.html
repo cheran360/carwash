@@ -21,14 +21,23 @@
     />
   </head>
   <body>
+    <a
+      class="btn btn-success"
+      style="margin-left: 1em; margin-top: 1em"
+      href="{% url 'home' %}"
+      >back</a
+    >
     <div class="container mt-3">
+      <h3 style="text-align: center">Your Bookings</h3>
       <div class="shadow-lg p-4 mb-4">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Bookings</th>
+              <th scope="col">Booking Id</th>
               <th>Status</th>
               <th>time</th>
+              <th>Service Type</th>
+              <th>Location</th>
             </tr>
           </thead>
           <tbody>
@@ -37,6 +46,8 @@
               <td>{{booking.id}}</td>
               <td>{{booking.status}}</td>
               <td>{{booking.date_created}}</td>
+              <td>{{booking.service_details.service_type}}</td>
+              <td>{{booking.service_details.location}}</td>
             </tr>
             {% endfor %}
           </tbody>

@@ -24,19 +24,31 @@
     <section class="vh-50">
       <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
-          <a class="hello-msg" href="{% url 'logout' %}">Logout</a>
-
-          {% if request.user.is_staff %}
-          <a class="hello-msg" href="{% url 'admin_add_places' %}"
-            >Add Services</a
-          >
-          <a class="hello-msg" href="{% url 'show_all_bookings' %}"
-            >Show All Bookings</a
-          >
-          {% else %}
-          <a href="{% url 'showBookings' %}">show your bookings</a>
-          {% endif %}
+          <div class="col-md-9 col-lg-6 col-xl-5">
+            <img
+              src="{% static 'images/login_and_signup.png' %}"
+              class="img-fluid"
+              alt="Sample image"
+            />
+          </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <div>
+              <a class="btn btn-success" href="{% url 'logout' %}">Logout</a>
+
+              {% if request.user.is_staff %}
+              <a class="btn btn-success" href="{% url 'admin_add_places' %}"
+                >Add Services</a
+              >
+              <a class="btn btn-success" href="{% url 'show_all_bookings' %}"
+                >Show All Bookings</a
+              >
+              {% else %}
+              <a class="btn btn-success" href="{% url 'showBookings' %}"
+                >show your bookings</a
+              >
+              {% endif %}
+            </div>
+            <br />
             <form method="POST" action="{% url 'showServices' %}">
               {% csrf_token %}
               <div class="form-outline mb-4">

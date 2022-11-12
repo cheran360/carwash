@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+  {% load static %} {% block content %}
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link href="{% static 'css/welcome.css'%}" rel="stylesheet" />
   </head>
-  <body>
-    <h3>hello , welcome to car wash</h3>
-    <a href="{% url 'login' %}">login</a>
-    <a href="{% url 'register' %}" class="link-danger">Register</a>
+  <body id="page-top">
+    <header class="masthead bg-secondary text-white text-center">
+      <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <img
+          class="masthead-avatar mb-5"
+          src="{% static 'images/image1.jpg' %}"
+          alt="..."
+        />
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0">Car Wash</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+          <div class="divider-custom-line"></div>
+          <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+          <div class="divider-custom-line"></div>
+        </div>
+        <!-- Masthead Subheading-->
+        <p class="masthead-subheading font-weight-light mb-0">
+          Service Interface And Admin interface
+        </p>
+        <br />
+        <a href="{% url 'login' %}" class="btn btn-primary">login</a>
+        <br />
+        <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
+      </div>
+    </header>
+    {% endblock content %}
   </body>
 </html>

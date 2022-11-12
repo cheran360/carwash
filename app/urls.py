@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+# add_place -> add_service
 urlpatterns = [
     path('', views.welcomePage, name='welcome'),
     path('login', views.loginUser, name='login'),

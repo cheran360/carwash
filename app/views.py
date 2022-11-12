@@ -62,7 +62,7 @@ def loginUser(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('login')
+    return redirect('welcome')
 
 @login_required(login_url='login')
 def showServices(request):
@@ -127,4 +127,3 @@ def adminModifyStatus(request,pk,status):
         booking.status = 'Rejected'
     booking.save()
     return redirect('home')
-

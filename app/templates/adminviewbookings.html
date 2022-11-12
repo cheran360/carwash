@@ -21,21 +21,36 @@
     />
   </head>
   <body>
+    <a
+      class="btn btn-success"
+      style="margin-left: 1em; margin-top: 1em"
+      href="{% url 'home' %}"
+      >back</a
+    >
     <div class="container mt-3">
+      <h3 style="text-align: center">Customers Bookings</h3>
       <div class="shadow-lg p-4 mb-4">
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Bookings</th>
-              <th>Status</th>
-              <th>time</th>
-              <th>Action</th>
+              <th scope="col">Booking ID</th>
+              <th scope="col">Location</th>
+              <th scope="col">Service</th>
+              <th scope="col">Customer ID</th>
+              <th scope="col">Customer Name</th>
+              <th scope="col">Status</th>
+              <th scope="col">Date and Time</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             {% for booking in bookings %}
             <tr>
               <td>{{booking.id}}</td>
+              <td>{{booking.service_details.location}}</td>
+              <td>{{booking.service_details.service_type}}</td>
+              <td>{{booking.customer_details.id}}</td>
+              <td>{{booking.customer_details.username}}</td>
               <td>{{booking.status}}</td>
               <th>{{booking.date_created}}</th>
               <td>
