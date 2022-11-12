@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
@@ -35,9 +35,12 @@ class Booking(models.Model):
     customer_details = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
     service_details = models.ForeignKey(Service, on_delete=models.SET_NULL, null=True, blank=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_created = models.DateField(default=datetime.date.today())
 
     def __str__(self):
         return str(self.id)
 
-
+class Tracker(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
+    date_created = models.DateField(default=datetime.date.today())
+    count = models.IntegerField(default=0)

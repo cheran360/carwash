@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .decorators import unauthenticated_user
-
+import datetime
 # Create your views here.
 def error_404_view(request, exception):
     data = {}
@@ -81,13 +81,31 @@ def bookService(request,pk):
     email = sample_user.email
     customer = Customer.objects.get(email=email)
     service = Service.objects.get(id=pk)
-    booking = Booking.objects.create(
-        customer_details = customer,
-        service_details = service,
-        status = 'Pending',
-    )
-    booking.save()
-    return redirect('home')
+    try:
+        track = Tracker.objects.get(customer=customer, date_created=datetime.date.today())
+        track.count += 1
+        if track.count > 5:
+            messages.info(request, 'bookings limit exceeded for today for customer')
+            return redirect('home')
+        booking = Booking.objects.create(
+            customer_details = customer,
+            service_details = service,
+            status = 'Pending',
+        )
+        track.save()
+        booking.save()
+        return redirect('home')
+    except:
+        track = Tracker.objects.create(customer=customer, date_created=datetime.date.today())
+        track.count += 1
+        track.save()
+        booking = Booking.objects.create(
+            customer_details = customer,
+            service_details = service,
+            status = 'Pending',
+        )
+        booking.save()
+        return redirect('home')
 
 @login_required(login_url='login')
 def showBookings(request):
@@ -105,9 +123,11 @@ def adminAddPlaces(request):
         if request.method == 'POST':
             location = request.POST.get('place')
             service = request.POST.get('service')
-
-            s = Servicetype.objects.create(type_of_service=service)
-            s.save()
+            try:
+                s = Servicetype.objects.get(type_of_service=service)
+            except:
+                s = Servicetype.objects.create(type_of_service=service)
+                s.save()
             new_service = Service.objects.create(location=location, service_type=s)
             new_service.save()
             return redirect('home')

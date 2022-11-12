@@ -28,26 +28,34 @@
       >back</a
     >
 
-    <input
-      type="date"
-      id="inputdate"
-      class="form-control form-control-lg"
-      placeholder="Date"
-      name="inputdate"
-      required
-    />
-    <input
-      type="text"
-      id="location"
-      class="form-control form-control-lg"
-      placeholder="location"
-      name="location"
-      required
-    />
-
     <div class="container mt-3">
       <h3 style="text-align: center">Customers Bookings</h3>
+
       <div class="shadow-lg p-4 mb-4">
+        <div class="row">
+          <div class="col">
+            <input
+              type="text"
+              id="location"
+              class="form-control form-control-lg"
+              placeholder="location"
+              name="location"
+              required
+            />
+          </div>
+          <div class="col">
+            <input
+              type="date"
+              id="inputdate"
+              class="form-control form-control-lg"
+              placeholder="Date"
+              name="inputdate"
+              required
+            />
+          </div>
+        </div>
+        <br />
+
         <table class="table" id="bookings_table">
           <thead>
             <tr>
