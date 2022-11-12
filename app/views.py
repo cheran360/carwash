@@ -12,6 +12,10 @@ from .decorators import unauthenticated_user
 
 # Create your views here.
 @unauthenticated_user
+def welcomePage(request):
+    context = {}
+    return render(request,'welcome.html',context)
+@unauthenticated_user
 def register(request):
     try:
         if request.method == 'POST':
@@ -97,10 +101,14 @@ def showBookings(request):
 def adminAddPlaces(request):
     if request.method == 'POST':
         ## need editing
-        service = request.POST.get('place')
-        new_service = Service.objects.create(location=place)
+        location = request.POST.get('place')
+        service = request.POST.get('service')
+
+        s = Servicetype.objects.create(type_of_service=service)
+        s.save()
+        new_service = Service.objects.create(location=location, service_type=s)
         new_service.save()
-        redirect('home')
+        return redirect('home')
     context = {}
     return render(request, 'adminaddplace.html', context)
 
@@ -119,5 +127,4 @@ def adminModifyStatus(request,pk,status):
         booking.status = 'Rejected'
     booking.save()
     return redirect('home')
-    
 

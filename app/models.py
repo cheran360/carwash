@@ -13,12 +13,19 @@ class Customer(models.Model):
     def __str__(self):
         return self.email
 
+class Servicetype(models.Model):
+    type_of_service = models.CharField(max_length=200, null=True, blank=True)
+    def __str__(self):
+        return str(self.type_of_service)
+
 class Service(models.Model):
     location = models.CharField(max_length=200, null=True, blank=True)
-    
+    service_type = models.ForeignKey(Servicetype, on_delete=models.SET_NULL, null=True, blank=True)
     def __str__(self):
         return str(self.id)
-        
+
+
+
 class Booking(models.Model):
     STATUS = (
         ('Pending', 'Pending'),

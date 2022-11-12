@@ -28,6 +28,7 @@
             <tr>
               <th scope="col">Bookings</th>
               <th>Status</th>
+              <th>time</th>
             </tr>
           </thead>
           <tbody>
@@ -35,6 +36,7 @@
             <tr>
               <td>{{booking.id}}</td>
               <td>{{booking.status}}</td>
+              <td>{{booking.date_created}}</td>
             </tr>
             {% endfor %}
           </tbody>
