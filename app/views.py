@@ -93,4 +93,31 @@ def showBookings(request):
     return render(request, 'bookings.html',context)
 
 
+@login_required(login_url='login')
+def adminAddPlaces(request):
+    if request.method == 'POST':
+        ## need editing
+        service = request.POST.get('place')
+        new_service = Service.objects.create(location=place)
+        new_service.save()
+        redirect('home')
+    context = {}
+    return render(request, 'adminaddplace.html', context)
+
+@login_required(login_url='login')
+def adminShowAllBookings(request):
+    bookings = Booking.objects.all()
+    context = {'bookings': bookings}
+    return render(request, 'adminviewbookings.html', context)
+
+@login_required(login_url='login')
+def adminModifyStatus(request,pk,status):
+    booking = Booking.objects.get(id=pk)
+    if status == '1':
+        booking.status = 'Accepted'
+    else:
+        booking.status = 'Rejected'
+    booking.save()
+    return redirect('home')
+    
 

@@ -25,19 +25,8 @@
       <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <a class="hello-msg" href="{% url 'logout' %}">Logout</a>
-
-          {% if request.user.is_staff %}
-          <a class="hello-msg" href="{% url 'admin_add_places' %}"
-            >Add Places</a
-          >
-          <a class="hello-msg" href="{% url 'show_all_bookings' %}"
-            >Show All Bookings</a
-          >
-          {% else %}
-          <a href="{% url 'showBookings' %}">show your bookings</a>
-          {% endif %}
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form method="POST" action="{% url 'showServices' %}">
+            <form method="POST" action="{% url 'admin_add_places' %}">
               {% csrf_token %}
               <div class="form-outline mb-4">
                 <input
@@ -47,9 +36,7 @@
                   placeholder="Enter Place"
                   name="place"
                 />
-                <label class="form-label" for="form3Example3"
-                  >Search Place</label
-                >
+                <label class="form-label" for="form3Example3">Add Place</label>
               </div>
 
               {% for message in messages %}
@@ -57,7 +44,7 @@
               {% endfor %}
 
               <div class="text-center text-lg-start mt-4 pt-2">
-                <input type="submit" value="submit" class="btn btn-primary" />
+                <input type="submit" value="add" class="btn btn-primary" />
               </div>
             </form>
           </div>
