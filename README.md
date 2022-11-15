@@ -13,7 +13,10 @@ python manage.py runserver
 server will run on 
 http://127.0.0.1:8000
 
-to check data bases and models login using admin details to the url http://127.0.0.1:8000/admin
+to check data bases and models login using admin details to the url http://127.0.0.1:8000/admin,,
+
+
+
 To login as admin, Go to login page and type following creds
 username - cheran,
 password - 1234
